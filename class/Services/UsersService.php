@@ -40,7 +40,7 @@ class UsersService
             foreach ($usersDTO as $userDTO) {
                 // Get user :
                 $user = new User();
-                $user->setId($userDTO['id']);
+                $user->setId($userDTO['id_user']);
                 $user->setFirstname($userDTO['firstname']);
                 $user->setLastname($userDTO['lastname']);
                 $user->setEmail($userDTO['email']);
@@ -50,7 +50,7 @@ class UsersService
                 }
 
                 // Get cars of this user :
-                $cars = $this->getUserCars($userDTO['id']);
+                $cars = $this->getUserCars($userDTO['id_user']);
                 $user->setCars($cars);
 
                 $users[] = $user;
@@ -100,7 +100,7 @@ class UsersService
         if (!empty($usersCarsDTO)) {
             foreach ($usersCarsDTO as $userCarDTO) {
                 $car = new Car();
-                $car->setId($userCarDTO['id']);
+                $car->setId($userCarDTO['id_car']);
                 $car->setBrand($userCarDTO['brand']);
                 $car->setModel($userCarDTO['model']);
                 $car->setColor($userCarDTO['color']);

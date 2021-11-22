@@ -3,7 +3,7 @@
 use App\Controllers\UsersController;
 use App\Services\CarsService;
 
-require __DIR__ . '/vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 $controller = new UsersController();
 echo $controller->createUser();

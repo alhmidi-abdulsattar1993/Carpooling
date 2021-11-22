@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Services;
 
@@ -18,11 +18,11 @@ class CarsService
         if (!empty($carsDTO)) {
             foreach ($carsDTO as $carDTO) {
                 $car = new Car();
-                $car->setId($carDTO['id']);
+                $car->setId($carDTO['id_car']);
                 $car->setBrand($carDTO['brand']);
                 $car->setModel($carDTO['model']);
                 $car->setColor($carDTO['color']);
-                $car->setNbrSlots($carDTO['nbrSlots']);
+                $car->setNbrSlots((int) $carDTO['nbrSlots']);
                 $cars[] = $car;
             }
         }

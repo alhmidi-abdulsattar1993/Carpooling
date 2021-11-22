@@ -2,7 +2,7 @@
 
 use App\Controllers\UsersController;
 
-require __DIR__ . '/vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 $controller = new UsersController();
 echo $controller->updateUser();
