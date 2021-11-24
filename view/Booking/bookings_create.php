@@ -21,14 +21,14 @@ $users = $usersService->getUsers();
     <label for="start_day">Date choisie au format dd-mm-yyyy :</label>
     <input type="text" name="start_day">
     <br />
-    <label for="notices">Annonce(s) :</label>
+    <label for="notice">Annonce(s) :</label>
     <?php foreach ($notices as $notice): ?>
-        <?php $noticeText = $notice->getText(); ?>
-        <input type="checkbox" name="notices[]" value="<?php echo $notice->getId(); ?>"><?php echo $noticeText; ?>
+        <?php $noticeText = $notice->getText() . ' ' . $notice->getStartCity() . ' -> ' . $notice->getEndCity(); ?>
+        <input type="radio" name="notice_id" value="<?php echo $notice->getId(); ?>"><?php echo $noticeText; ?>
         <br />
     <?php endforeach; ?>
     <br />
-	<label for="users">Passager :</label>
+	<label for="users">Passager(s) :</label>
     <?php foreach ($users as $user): ?>
         <?php $userName = $user->getFirstname() . ' ' . $user->getLastname(); ?>
         <input type="checkbox" name="users[]" value="<?php echo $user->getId(); ?>"><?php echo $userName; ?>

@@ -18,9 +18,11 @@ class User
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(string $id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getFirstname(): string
@@ -28,9 +30,11 @@ class User
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): void
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
     }
 
     public function getLastname(): string
@@ -38,9 +42,11 @@ class User
         return $this->lastname;
     }
 
-    public function setLastname(string $lastname): void
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
     }
 
     public function getEmail(): string
@@ -48,9 +54,11 @@ class User
         return $this->email;
     }
 
-    public function setEmail($email): void
+    public function setEmail($email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
     public function getBirthday(): DateTime
@@ -58,9 +66,11 @@ class User
         return $this->birthday;
     }
 
-    public function setBirthday(DateTime $birthday): void
+    public function setBirthday(DateTime $birthday): self
     {
         $this->birthday = $birthday;
+
+        return $this;
     }
 
     public function getCars(): ?array
@@ -68,7 +78,7 @@ class User
         return $this->cars;
     }
 
-    public function setCars(array $cars)
+    public function setCars(array $cars): self
     {
         $this->cars = $cars;
 

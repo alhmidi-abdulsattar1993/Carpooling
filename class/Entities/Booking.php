@@ -9,8 +9,8 @@ class Booking
     private $id;
     private $start_day;
     private $id_notice;
-    private $id_user_pax;
     private $notice;
+    private $pax;
 
     public function getId(): string
     {
@@ -48,18 +48,6 @@ class Booking
         return $this;
     }
 
-    public function getUserPax(): string
-    {
-        return $this->id_user_pax;
-    }
-
-    public function setUserPax(string $id_user_pax): self
-    {
-        $this->id_user_pax = $id_user_pax;
-
-        return $this;
-    }
-
     public function getNotice(): ?Notice
     {
         return $this->notice;
@@ -68,6 +56,18 @@ class Booking
     public function setNotice(Notice $notice)
     {
         $this->notice = $notice;
+
+        return $this;
+    }
+
+    public function getPax(): ?array
+    {
+        return $this->pax;
+    }
+
+    public function setPax(array $pax): self
+    {
+        $this->pax = $pax;
 
         return $this;
     }

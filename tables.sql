@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Nov 22, 2021 at 06:01 PM
+-- Generation Time: Nov 24, 2021 at 05:19 PM
 -- Server version: 8.0.22
 -- PHP Version: 7.4.20
 
@@ -31,7 +31,7 @@ CREATE TABLE `bookings` (
   `id_booking` int NOT NULL,
   `start_day` datetime NOT NULL,
   `notice_id` int NOT NULL,
-  `user_pax_id` int NOT NULL
+  `user_pax_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `bookings` (
 INSERT INTO `bookings` (`id_booking`, `start_day`, `notice_id`, `user_pax_id`) VALUES
 (4, '2021-10-12 00:00:00', 3, 1),
 (5, '2021-10-12 00:00:00', 3, 1),
-(6, '2020-12-12 00:00:00', 3, 86);
+(7, '2021-12-12 00:00:00', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,7 @@ INSERT INTO `cars` (`id_car`, `brand`, `color`, `model`, `nbrSlots`, `user_id`) 
 (1, 'Skoda', 'Noire', 'Fabia', 5, 1),
 (2, 'Huandai', 'Rouge', 'Getz', 5, 2),
 (3, 'Mercedes', 'Noire', 'Classe C', 4, 3),
-(4, 'Renaut', 'Bleu', 'Zoé', 2, 4);
+(4, 'Renault', 'Bleue', 'Zoé', 2, 4);
 
 -- --------------------------------------------------------
 
@@ -113,6 +113,24 @@ INSERT INTO `users` (`id_user`, `firstname`, `lastname`, `email`, `birthday`) VA
 (2, 'Jean-Michel', 'DUPONT', 'email@email.fr', '1995-11-09 17:51:41'),
 (3, 'Marc', 'ROBERT', 'marc@email.com', '2000-09-23 17:52:54'),
 (4, 'Julien', 'AVRIL', 'monemail@fai.fr', '1980-06-16 17:52:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_bookings`
+--
+
+CREATE TABLE `users_bookings` (
+  `booking_id` int NOT NULL,
+  `user_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users_bookings`
+--
+
+INSERT INTO `users_bookings` (`booking_id`, `user_id`) VALUES
+(7, 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +195,7 @@ ALTER TABLE `users_cars`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id_booking` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_booking` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `cars`

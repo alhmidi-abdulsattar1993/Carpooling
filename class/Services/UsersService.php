@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Services;
 
@@ -46,7 +46,7 @@ class UsersService
                 $user->setEmail($userDTO['email']);
                 $date = new DateTime($userDTO['birthday']);
                 if ($date !== false) {
-                    $user->setbirthday($date);
+                    $user->setBirthday($date);
                 }
 
                 // Get cars of this user :
@@ -68,9 +68,8 @@ class UsersService
         $isOk = false;
 
         $dataBaseService = new DataBaseService();
-        $isOk = $dataBaseService->deleteUser($id);
 
-        return $isOk;
+        return $dataBaseService->deleteUser($id);
     }
 
     /**
@@ -81,9 +80,8 @@ class UsersService
         $isOk = false;
 
         $dataBaseService = new DataBaseService();
-        $isOk = $dataBaseService->setUserCar($userId, $carId);
 
-        return $isOk;
+        return $dataBaseService->setUserCar($userId, $carId);
     }
 
     /**
@@ -104,7 +102,7 @@ class UsersService
                 $car->setBrand($userCarDTO['brand']);
                 $car->setModel($userCarDTO['model']);
                 $car->setColor($userCarDTO['color']);
-                $car->setNbrSlots($userCarDTO['nbrSlots']);
+                $car->setNbrSlots((int) $userCarDTO['nbrSlots']);
                 $userCars[] = $car;
             }
         }

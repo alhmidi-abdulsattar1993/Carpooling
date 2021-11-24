@@ -68,13 +68,11 @@ class NoticesService
     }
 
     /**
-     * Return all booking from a notice. WIP
+     * Return all booking from a notice. WIP.
      */
     public function getBookings(string $id): array
     {
-        $bookings = [];
-
-        return $bookings;
+        return [];
     }
 
     /**
@@ -92,7 +90,7 @@ class NoticesService
             $user->setLastname($userDTO['lastname']);
             $user->setEmail($userDTO['email']);
             $date = new DateTime($userDTO['birthday']);
-            if($date !== false){
+            if ($date !== false) {
                 $user->setBirthday($date);
             }
         }

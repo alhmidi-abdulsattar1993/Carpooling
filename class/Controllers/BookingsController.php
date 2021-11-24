@@ -16,17 +16,25 @@ class BookingsController
         // If the form have been submitted :
         if (isset($_POST['start_day'])
             && isset($_POST['notice_id'])
-            && isset($_POST['user_pax_id'])) {
+            && isset($_POST['users'])) {
             // Create the booking :
             $bookingService = new BookingsService();
             $bookingId = $bookingService->setBooking(
                 null,
                 $_POST['start_day'],
                 $_POST['notice_id'],
-                $_POST['user_pax_id']
+                null
             );
 
-            if ($bookingId) {
+            // Create the booking <-> pax users relations :
+            $isOk = true;
+            if (!empty($_POST['users'])) {
+                foreach ($_POST['users'] as $userId) {
+                    $isOk = $bookingService->setBookingUser($userId, $bookingId);
+                }
+            }
+
+            if ($bookingId && $isOk) {
                 $html = 'Réservation créée avec succès.';
             } else {
                 $html = 'Erreur lors de la création de la réservation.';
@@ -49,17 +57,26 @@ class BookingsController
 
         // Get html :
         foreach ($bookings as $booking) {
-            $noticeHtml = '';
+            $noticeHtml = 'Annonce #';
             if (!empty($booking->getNotice())) {
                 $notice = $booking->getNotice();
-                $noticeHtml .= 'Annonce : ' . $notice->getText() . ' Départ de : ' . $notice->getStartCity() . ' Arrivée à : ' . $notice->getEndCity() . ' Conducteur : ' . $notice->getUserCreator();
+                $noticeHtml .= $notice->getId() .
+                ' ' . $notice->getText() .
+                ' Départ de : ' . $notice->getStartCity() .
+                ' Arrivée à : ' . $notice->getEndCity() .
+                ' Conducteur : ' . $notice->getCreator()->getFirstname() . ' ' . $notice->getCreator()->getLastname();
+            }
+            $passangersHtml = ' Passagers : ';
+            if (!empty($booking->getPax())) {
+                foreach ($booking->getPax() as $user) {
+                    $passangersHtml .= $user->getFirstname() . ' ' . $user->getLastname() . ',';
+                }
             }
             $html .=
-                '#' . $booking->getId() . ' ' .
+                'Réservation #' . $booking->getId() . ' ' .
                 $booking->getStartDay()->format('d-m-Y') . ' ' .
-                $booking->getIdNotice() . ' ' .
-                $booking->getUserPax() . ' ' .
                 $noticeHtml .
+                $passangersHtml .
                 '<br />';
         }
 
@@ -67,7 +84,7 @@ class BookingsController
     }
 
     /**
-     * Update the user.
+     * Update the booking.
      */
     public function updateBooking(): string
     {
@@ -77,14 +94,14 @@ class BookingsController
         if (isset($_POST['id_booking'])
             && isset($_POST['start_day'])
             && isset($_POST['notice_id'])
-            && isset($_POST['user_id'])) {
-            // Update the user :
+            && isset($_POST['users'])) {
+            // Update the booking :
             $BookingsService = new BookingsService();
             $isOk = $BookingsService->setBooking(
-                $_POST['id'],
+                $_POST['id_booking'],
                 $_POST['start_day'],
                 $_POST['notice_id'],
-                $_POST['user_id']
+                $_POST['users']
             );
             if ($isOk) {
                 $html = 'Réservation mise à jour avec succès.';
@@ -97,7 +114,7 @@ class BookingsController
     }
 
     /**
-     * Delete an user.
+     * Delete a booking.
      */
     public function deleteBooking(): string
     {

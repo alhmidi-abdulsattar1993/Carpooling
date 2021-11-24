@@ -186,16 +186,15 @@ class DataBaseService
     /**
      * Create a booking.
      */
-    public function createBooking(DateTime $start_day, string $notice_id, string $user_pax_id): string
+    public function createBooking(DateTime $start_day, string $notice_id): string
     {
         $bookingId = '';
 
         $data = [
             'start_day' => $start_day->format(DateTime::RFC3339),
             'notice_id' => $notice_id,
-            'user_pax_id' => $user_pax_id,
         ];
-        $sql = 'INSERT INTO bookings (start_day, notice_id, user_pax_id) VALUES (:start_day, :notice_id, :user_pax_id)';
+        $sql = 'INSERT INTO bookings (start_day, notice_id) VALUES (:start_day, :notice_id)';
         $query = $this->connection->prepare($sql);
         $isOk = $query->execute($data);
         if ($isOk) {
@@ -208,20 +207,42 @@ class DataBaseService
     /**
      * Create a booking.
      */
-    public function updateBooking(string $id, DateTime $start_day, string $notice_id, string $user_pax_id): bool
+    public function updateBooking(string $id, DateTime $start_day, string $notice_id, array $users): bool
     {
-        $isOk = false;
+        $isOk1 = false;
+        $isOk2 = false;
 
+        //update the booking
         $data = [
             'id_booking' => $id,
             'start_day' => $start_day->format(DateTime::RFC3339),
             'notice_id' => $notice_id,
-            'user_pax_id' => $user_pax_id,
         ];
-        $sql = 'UPDATE bookings SET start_day = :start_day, notice_id = :notice_id, user_pax_id = :user_pax_id WHERE id_booking = :id;';
+        $sql = 'UPDATE bookings SET start_day = :start_day, notice_id = :notice_id WHERE id_booking = :id_booking;';
         $query = $this->connection->prepare($sql);
+        $isOk1 = $query->execute($data);
 
-        return $query->execute($data);
+        //delete booking users relation
+        $data = [
+            'id_booking' => $id,
+        ];
+        $sql = 'DELETE FROM users_bookings WHERE booking_id = :id_booking;';
+        $query = $this->connection->prepare($sql);
+        $isOk2 = $query->execute($data);
+
+        //update booking users relation
+        foreach ($users as $user) {
+            //if error
+            if (!($this->setBookingUser($user, $id))) {
+                return false;
+            }
+        }
+
+        if ($isOk1 == $isOk2) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -234,7 +255,7 @@ class DataBaseService
         $data = [
             'id' => $id,
         ];
-        $sql = 'DELETE FROM bookings WHERE id_booking = :id;';
+        $sql = 'DELETE FROM bookings WHERE id_booking = :id; DELETE FROM users_bookings WHERE booking_id = :id;';
         $query = $this->connection->prepare($sql);
 
         return $query->execute($data);
@@ -354,5 +375,46 @@ class DataBaseService
         $query = $this->connection->prepare($sql);
 
         return $query->execute($data);
+    }
+
+    /**
+     * Create relation bewteen a booking and its pax user.
+     */
+    public function setBookingUser(string $userId, string $bookingId): bool
+    {
+        $data = [
+            'userId' => $userId,
+            'bookingId' => $bookingId,
+        ];
+
+        $sql = 'INSERT INTO users_bookings (booking_id, user_id) VALUES (:bookingId, :userId)';
+        $query = $this->connection->prepare($sql);
+
+        return $query->execute($data);
+    }
+
+    /**
+     * Get passenger of given booking id.
+     */
+    public function getBookingPax(string $bookingId): array
+    {
+        $bookingPax = [];
+
+        $data = [
+            'booking_id' => $bookingId,
+        ];
+        $sql = '
+            SELECT u.*
+            FROM users as u
+            LEFT JOIN users_bookings as ub ON ub.user_id = u.id_user
+            WHERE ub.booking_id = :booking_id';
+        $query = $this->connection->prepare($sql);
+        $query->execute($data);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($results)) {
+            $bookingPax = $results;
+        }
+
+        return $bookingPax;
     }
 }
