@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %} {% block body %}
+<div class="message">{{ message }} </div>
+<h2>Ajouter une annonce</h2>
+<div class="form-container">
+    <form method="post" action="create_notice.php" name="userCreateForm">
+        <div class=" form-group ">
+            <label for="text">Déscription :</label>
+            <input type="text" name="text" class="form-control">
+        </div>
+        <div class=" form-group ">
+            <label for="start_city">Départ de :</label>
+            <input type="text" name="start_city" class="form-control">
+        </div>
+        <div class=" form-group ">
+            <label for="end_city">Arrivée à :</label>
+            <input type="text" name="end_city" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="users">Créateur de l'annonce :</label>
+            </br>{% for i in 0..userName|length-1 %}
+            <input class="box-bth" type="radio" name="user_creator_id" value="{{ userId[i] }}">{{ userName[i] }} {% endfor %}
+        </div>
+        <button type="submit " class="btn btn-primary ">valider</button>
+    </form>
+</div> {% endblock %}

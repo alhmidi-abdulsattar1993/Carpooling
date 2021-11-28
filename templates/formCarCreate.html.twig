@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %} {% block body %}
+<div class="message">{{ message }} </div>
+<h2>Création d'une voiture</h2>
+<div class="form-container">
+    <form method="post" action="addcar.php" name="userCreateForm">
+        <div class=" form-group ">
+            <label>brand:</label>
+            <input type="text" name="brand" class="form-control" placeholder="brand de la voiture">
+        </div>
+        <div class="form-group ">
+            <label>Model</label>
+            <input type="text" name="model" class="form-control " placeholder="Model de la voiture">
+        </div>
+        <div class="form-group">
+            <label for="color">color :</label>
+            <input type="text" name="color" class="form-control " placeholder="Color de la voiture">
+        </div>
+        <div class="form-group">
+            <label for="nbrSlots">nbrSlots:</label>
+            <input type="number" name="nbrSlots" class="form-control ">
+        </div>
+        <button type="submit " class="btn btn-primary ">Ajouter</button>
+    </form>
+    {% endblock %}

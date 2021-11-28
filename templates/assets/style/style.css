@@ -1,0 +1,53 @@
+    .form-container {
+        max-width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1 px solid #ededed;
+        padding: 52 px;
+        background: #18171700;
+    }
+    
+    .containter_global {
+        display: flex !important;
+    }
+    
+    .box-bth {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+    
+    .bcontent {
+        margin-top: 10px;
+    }
+    
+    h2 {
+        text-align: center;
+        margin-top: 10px!important;
+        margin-bottom: 20px;
+    }
+    
+    label {
+        padding-bottom: 12px;
+        padding-top: 12px;
+    }
+    
+    .btn-primary {
+        margin-top: 12px;
+    }
+    
+    .message {
+        text-align: center;
+        margin-top: 10px;
+        background-color: #34a74e;
+        font-size: 19px;
+        color: white;
+    }
+    
+    .liens {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .btn-primary {
+        margin: 5px;
+    }

@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php
 
 namespace App\Services;
 
@@ -8,11 +8,11 @@ use PDO;
 
 class DataBaseService
 {
-    public const HOST = '127.0.0.1';
-    public const PORT = '3306';
-    public const DATABASE_NAME = 'carpooling';
-    public const MYSQL_USER = 'root';
-    public const MYSQL_PASSWORD = 'password';
+    const HOST = '127.0.0.1';
+    const PORT = '3306';
+    const DATABASE_NAME = 'carpooling';
+    const MYSQL_USER = 'root';
+    const MYSQL_PASSWORD = '';
 
     private $connection;
 
@@ -24,7 +24,7 @@ class DataBaseService
                 self::MYSQL_USER,
                 self::MYSQL_PASSWORD
             );
-            $this->connection->exec('SET CHARACTER SET utf8');
+            $this->connection->exec("SET CHARACTER SET utf8");
         } catch (Exception $e) {
             echo 'Erreur : ' . $e->getMessage();
         }
@@ -84,10 +84,11 @@ class DataBaseService
             'email' => $email,
             'birthday' => $birthday->format(DateTime::RFC3339),
         ];
-        $sql = 'UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, birthday = :birthday WHERE id = :id;';
+        $sql = 'UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, birthday = :birthday WHERE id_user  = :id;';
         $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
 
-        return $query->execute($data);
+        return $isOk;
     }
 
     /**
@@ -100,10 +101,11 @@ class DataBaseService
         $data = [
             'id' => $id,
         ];
-        $sql = 'DELETE FROM users WHERE id = :id;';
+        $sql = 'DELETE FROM users WHERE id_user  = :id;';
         $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
 
-        return $query->execute($data);
+        return $isOk;
     }
 
     /**
@@ -134,11 +136,11 @@ class DataBaseService
             'userId' => $userId,
             'carId' => $carId,
         ];
-
         $sql = 'INSERT INTO users_cars (user_id, car_id) VALUES (:userId, :carId)';
         $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
 
-        return $query->execute($data);
+        return $isOk;
     }
 
     /**
@@ -154,7 +156,7 @@ class DataBaseService
         $sql = '
             SELECT c.*
             FROM cars as c
-            LEFT JOIN users_cars as uc ON uc.car_id = c.id_car
+            LEFT JOIN users_cars as uc ON uc.car_id = c.id
             WHERE uc.user_id = :userId';
         $query = $this->connection->prepare($sql);
         $query->execute($data);
@@ -165,8 +167,68 @@ class DataBaseService
 
         return $userCars;
     }
+    /**
+     * Creat a car
+     */
+    
+    public function setCar(string $brand, string $model, string $color, int $nbrSlots): string
+    {
+        $carId = '';
+
+        $data = [
+            'brand' => $brand,
+            'model' => $model,
+            'color' => $color,
+            'nbrSlots' => $nbrSlots,
+          
+        ];
+        $sql = 'INSERT INTO cars (brand, model, color, nbrSlots) VALUES (:brand, :model, :color, :nbrSlots )';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+        if ($isOk) {
+            $carId = $this->connection->lastInsertId();
+        }
+
+        return $carId;
+    }
+    /**
+     * Update a car
+     */
+    public function updateCar(string $id, string $brand, string $model, string $color, int $nbrSlots): bool
+    {
+        $isOk = false;
+
+        $data = [
+            'id' => $id,
+            'brand' => $brand,
+            'model' => $model,
+            'color' => $color,
+            'nbrSlots' => $nbrSlots,
+        ];
+        $sql = 'UPDATE cars SET brand = :brand, model = :model, color = :color, nbrSlots = :nbrSlots WHERE id_car  = :id;';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+
+        return $isOk;
+    }
 
     /**
+     * Delete an car.
+     */
+    public function deleteCar(string $id): bool
+    {
+        $isOk = false;
+
+        $data = [
+            'id_car' => $id,
+        ];
+        $sql = 'DELETE FROM cars WHERE id_car  = :id_car;';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+
+        return $isOk;
+    }
+     /**
      * Return all bookings.
      */
     public function getBookings(): array

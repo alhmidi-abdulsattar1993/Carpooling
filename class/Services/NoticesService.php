@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Entities\Booking;
+
 use App\Entities\Notice;
 use App\Entities\User;
 use DateTime;

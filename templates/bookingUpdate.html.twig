@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %} {% block body %}
+<div class="message">{{ message }} </div>
+<h2>Mis à jours d'une réservation</h2>
+<div class="form-container">
+    <form method="post" action="update_booking.php" name="bookingCreateForm">
+        <div class=" form-group ">
+            <label for="id">Id :</label>
+            <input type="text" name="id_booking" class="form-control">
+        </div>
+        <div class=" form-group ">
+            <label for="start_day">Date choisie au format dd-mm-yyyy :</label>
+            <input type="text" name="start_day" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nbrSlots">nbrSlots:</label>
+            <input type="number" name="nbrSlots" class="form-control ">
+        </div>
+        <div class="form-group">
+            <label for="notice">Annonce(s) :</label>
+            </br>{% for i in 0..noiceId|length-1 %}
+            <input class="box-bth" type="radio" name="notice_id" value="{{ noiceId[i] }}">{{ noticeText[i] }} {% endfor %}
+        </div>
+        <div class="form-group">
+            <label for="users">Passager(s) :</label>
+            </br>{% for i in 0..userName|length-1 %}
+            <input class="box-bth" type="checkbox" name="users[]" value="{{ userId[i] }}">{{ userName[i] }} {% endfor %}
+        </div>
+        <button type="submit " class="btn btn-primary ">Ajouter</button>
+    </form>
+</div>
+{% endblock %}

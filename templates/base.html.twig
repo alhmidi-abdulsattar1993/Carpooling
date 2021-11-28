@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>CAR POOLING</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="templates/assets/style/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+{# NAV BAR #}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/UE-3DW15-2021-2022-carpooling/">CAR POOLING</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/UE-3DW15-2021-2022-carpooling/">Home
+            </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="adduser.php">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="addcar.php">Voiteurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="create_notice.php">Annonce</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="create_bookings.php">Booking</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+{% block body %}{% endblock %}
+
+<body>

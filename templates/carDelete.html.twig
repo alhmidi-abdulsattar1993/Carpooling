@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %} {% block body %}
+<div class="message">{{ message }} </div>
+<h2>Suprimer une voiture</h2>
+<div class="form-container">
+    <form method="post" action="delete_car.php" name="userCreateForm">
+        <div class=" form-group ">
+            <label for="id_car">Id :</label>
+            <input type="text" name="id_car" class="form-control" placeholder="Id de la voiture">
+        </div>
+        <button type="submit " class="btn btn-primary ">Suprimer</button>
+    </form>
+</div>
+{% endblock %}

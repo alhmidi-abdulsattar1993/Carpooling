@@ -95,11 +95,10 @@ class BookingsService
         $userDTO = $dataBaseService->getUser($noticeDTO['user_creator_id']);
 
         if (!empty($userDTO)) {
-            $user->setId($userDTO['id_user'])
-                ->setFirstname($userDTO['firstname'])
-                ->setLastname($userDTO['lastname'])
-                ->setEmail($userDTO['email'])
-                ;
+            $user->setId($userDTO['id_user']);
+            $user->setFirstname($userDTO['firstname']);
+            $user->setLastname($userDTO['lastname']);
+            $user->setEmail($userDTO['email']);
             $date = new DateTime($userDTO['birthday']);
             if ($date !== false) {
                 $user->setBirthday($date);
@@ -134,10 +133,10 @@ class BookingsService
         if (!empty($bookingPaxDTO)) {
             foreach ($bookingPaxDTO as $userDTO) {
                 $user = new User();
-                $user->setId($userDTO['id_user'])
-                    ->setFirstname($userDTO['firstname'])
-                    ->setLastname($userDTO['lastname'])
-                    ->setEmail($userDTO['email'])
+                $user->setId($userDTO['id_user']);
+                $user->setFirstname($userDTO['firstname']);
+                $user->setLastname($userDTO['lastname']);
+                $user->setEmail($userDTO['email']);
                 ;
                 $date = new DateTime($userDTO['birthday']);
                 if ($date !== false) {

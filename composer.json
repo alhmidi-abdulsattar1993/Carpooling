@@ -6,7 +6,10 @@
             "email": "vincent.gode@groupe-celios.fr"
         }
     ],
-    "require": {},
+    "require": {
+        "twig/twig": "2.0",
+        "doctrine/annotations": "^1.13"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "class/"

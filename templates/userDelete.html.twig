@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %} {% block body %}
+<div class="message">{{ message }} </div>
+<h2>Suprimer un utilisateur</h2>
+<div class="form-container">
+    <form method="post" action="delete_user.php" name="userCreateForm">
+        <div class=" form-group ">
+            <label for="id">Id :</label>
+            <input type="text" name="id" class="form-control" placeholder="Id de l'utilisateur">
+        </div>
+        <button type="submit " class="btn btn-primary ">Suprimer</button>
+    </form>
+</div>
+{% endblock %}

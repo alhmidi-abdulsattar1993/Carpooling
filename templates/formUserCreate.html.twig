@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %} {% block body %}
+<h2>Inscription utilisateur</h2>
+<div class="form-container">
+    <form method="post" action="./index.php" name="userCreateForm">
+        <div class=" form-group ">
+            <label for="firstname">Prénom</label>
+            <input type="text " class="form-control" name="firstname" id="firstname" placeholder="Votre prénom ">
+        </div>
+        <div class="form-group ">
+            <label for="lastname ">Nom</label>
+            <input type="text " class="form-control " name="lastname" id="lastname " placeholder="Votre nom ">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1 ">Email address</label>
+            <input type="email" class="form-control " name="email" id="exampleInputEmail1 " aria-describedby="emailHelp " placeholder="Enter email ">
+        </div>
+        <div class="form-group">
+            <label for="birthday">Date d'anniversaire au format dd-mm-yyyy :</label>
+            <input type="text" class="form-control " name="birthday">
+        </div>{% for items in carName.id %}
+        <li> {{ items.name}}</li> {{ items.id}} {% endfor %}
+        <div class="form-group">
+            <label for="birthday">Date d'anniversaire au format dd-mm-yyyy :</label>
+            </br>{% for i in 0..carName|length-1 %} <input class="box-bth" type="checkbox" name="cars[]" value="{{ carId[i] }}">{{ carName[i] }} {% endfor %}
+        </div>
+        <button type="submit " class="btn btn-primary ">valider</button>
+    </form>
+</div> {% endblock %}

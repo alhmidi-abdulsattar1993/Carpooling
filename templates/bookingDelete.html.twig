@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %} {% block body %}
+<div class="message">{{ message }} </div>
+<h2>Suprimer une réservation</h2>
+<div class="form-container">
+    <form method="post" action="delete_booking.php" name="bookingDeleteForm">
+        <div class=" form-group ">
+            <label for="id_booking">Id réservation : </label>
+            <input type="text" name="id_booking" class="form-control">
+        </div>
+        <button type="submit " class="btn btn-primary ">Suprimer</button>
+    </form>
+</div>
+{% endblock %}

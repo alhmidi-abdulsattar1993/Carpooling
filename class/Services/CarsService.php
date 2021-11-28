@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php
 
 namespace App\Services;
 
@@ -22,11 +22,41 @@ class CarsService
                 $car->setBrand($carDTO['brand']);
                 $car->setModel($carDTO['model']);
                 $car->setColor($carDTO['color']);
-                $car->setNbrSlots((int) $carDTO['nbrSlots']);
+                $car->setNbrSlots($carDTO['nbrSlots']);
                 $cars[] = $car;
             }
         }
 
         return $cars;
+    }
+
+    /**
+     * Create or update a cars.
+     */
+    public function setCar(?string $id, string $brand, string $model, string $color, int $nbrSlots): string
+    {
+        $carId = '';
+
+        $dataBaseService = new DataBaseService();
+        if (empty($id)) {
+            $carId = $dataBaseService->setCar($brand, $model, $color, $nbrSlots);
+        } else {
+            $dataBaseService->updateCar($id, $brand, $model, $color, $nbrSlots);
+            $carId = $id;
+        }
+
+        return $carId;
+    }
+    /**
+     * delet a car service
+     */
+    public function deleteCar(string $id): bool
+    {
+       
+
+        $dataBaseService = new DataBaseService();
+        $isOk = $dataBaseService->deleteCar($id);
+
+        return $isOk;
     }
 }

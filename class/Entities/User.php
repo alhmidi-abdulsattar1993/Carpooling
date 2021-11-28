@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php
 
 namespace App\Entities;
 
@@ -18,11 +18,9 @@ class User
         return $this->id;
     }
 
-    public function setId(string $id): self
+    public function setId(string $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
     public function getFirstname(): string
@@ -30,11 +28,9 @@ class User
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setFirstname(string $firstname): void
     {
         $this->firstname = $firstname;
-
-        return $this;
     }
 
     public function getLastname(): string
@@ -42,11 +38,9 @@ class User
         return $this->lastname;
     }
 
-    public function setLastname(string $lastname): self
+    public function setLastname(string $lastname): void
     {
         $this->lastname = $lastname;
-
-        return $this;
     }
 
     public function getEmail(): string
@@ -54,11 +48,9 @@ class User
         return $this->email;
     }
 
-    public function setEmail($email): self
+    public function setEmail($email): void
     {
         $this->email = $email;
-
-        return $this;
     }
 
     public function getBirthday(): DateTime
@@ -66,11 +58,9 @@ class User
         return $this->birthday;
     }
 
-    public function setBirthday(DateTime $birthday): self
+    public function setBirthday(DateTime $birthday): void
     {
         $this->birthday = $birthday;
-
-        return $this;
     }
 
     public function getCars(): ?array
@@ -78,7 +68,7 @@ class User
         return $this->cars;
     }
 
-    public function setCars(array $cars): self
+    public function setCars(array $cars)
     {
         $this->cars = $cars;
 

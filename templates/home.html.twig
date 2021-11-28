@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %} {% block body %}
+<div class="message">{{ message }} </div>
+<div class='containter_global'>
+    <div class="container bcontent">
+        <h2>Liste des utilisateur </h2>
+        <div class="liens">
+            <a class="btn btn-primary" href="updateUser.php" role="button">Modifier</a>
+            <a class="btn btn-primary" href="delete_user.php" role="button">Suprimer</a>
+        </div>
+        <hr /> {% for items in users %}
+        <div class="media border p-3">
+            <img class="mr-3" src="templates/images/profile.png" alt="Suresh Dasari" style="width:80px;">
+            <div class="media-body">
+                <h5> {{items.name }}{{ " " }} {{items.lastname }} <small><i>{{items.birth}}</i></small></h5>
+                <p>{{items.mail}} {{item.cars}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container bcontent">
+        <h2>Liste des voitures </h2>
+        <div class="liens">
+            <a class="btn btn-primary" href="update_car.php" role="button">Modifier</a>
+            <a class="btn btn-primary" href="delete_car.php" role="button">Suprimer</a>
+        </div>
+        <hr /> {% for items in cars %}
+        <div class="media border p-3">
+            <img class="mr-3" src="templates/images/car.png" alt="Suresh Dasari" style="width:80px;">
+            <div class="media-body">
+                <h5> {{items.brand }}{{ " " }} {{items.model }} <small><i>{{items.color}}</i></small></h5>
+                <p>Nombre de place :{{ " " }} {{items.nbrSlots}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container bcontent">
+        <h2>Liste des notices </h2>
+        <div class="liens">
+            <a class="btn btn-primary" href="update_notice.php" role="button">Modifier</a>
+            <a class="btn btn-primary" href="delete_notice.php" role="button">Suprimer</a>
+        </div>
+        <hr /> {% for items in notices %}
+        <div class="media border p-3">
+            <img class="mr-3" src="templates/images/notice.png" alt="Suresh Dasari" style="width:80px;">
+            <div class="media-body">
+                <h5> {{items.StratCity }}{{ " " }} {{items.EndCit }} <small><i>{{items.UserCreator}}</i></small></h5>
+                <p> {{items.uesrIfo}}
+                    </br> Note : {{ " " }} {{ items.text }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container bcontent">
+        <h2>Liste des bookings </h2>
+        <div class="liens">
+            <a class="btn btn-primary" href="update_booking.php" role="button">Modifier</a>
+            <a class="btn btn-primary" href="delete_booking.php" role="button">Suprimer</a>
+        </div>
+        <hr /> {% for items in booking %}
+        <div class="media border p-3">
+            <img class="mr-3" src="templates/images/booking.png" alt="Suresh Dasari" style="width:80px;">
+            <div class="media-body">
+                <h5>Id booking : {{items.id_booking}}<small><i> </i></small></h5>
+                <p>{{ items.ar_booking}}
+                    </br> {{items.passangers}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div> {% endblock %}

@@ -47,9 +47,9 @@ class BookingsController
     /**
      * Return the html for the read action.
      */
-    public function getBookings(): string
+    public function getBookings(): array
     {
-        $html = '';
+        $html = [];
 
         // Get all bookings :
         $bookingsService = new BookingsService();
@@ -57,14 +57,14 @@ class BookingsController
 
         // Get html :
         foreach ($bookings as $booking) {
-            $noticeHtml = 'Annonce #';
+            $noticeHtml = 'Annonce N° : ';
             if (!empty($booking->getNotice())) {
                 $notice = $booking->getNotice();
-                $noticeHtml .= $notice->getId() .
-                ' ' . $notice->getText() .
-                ' Départ de : ' . $notice->getStartCity() .
-                ' Arrivée à : ' . $notice->getEndCity() .
-                ' Conducteur : ' . $notice->getCreator()->getFirstname() . ' ' . $notice->getCreator()->getLastname();
+                $noticeHtml .= $notice->getId().
+                '   Note :  ' . $notice->getText().
+                '   Départ de : ' . $notice->getStartCity().
+                '   Arrivée à : ' . $notice->getEndCity().
+                '   Conducteur : ' . $notice->getCreator()->getFirstname() . ' ' . $notice->getCreator()->getLastname();
             }
             $passangersHtml = ' Passagers : ';
             if (!empty($booking->getPax())) {
@@ -72,12 +72,11 @@ class BookingsController
                     $passangersHtml .= $user->getFirstname() . ' ' . $user->getLastname() . ',';
                 }
             }
-            $html .=
-                'Réservation #' . $booking->getId() . ' ' .
-                $booking->getStartDay()->format('d-m-Y') . ' ' .
-                $noticeHtml .
-                $passangersHtml .
-                '<br />';
+             array_push($html , array(
+                'id_booking' => $booking->getId(),
+                'dp_booking'=> $booking->getStartDay()->format('d-m-Y'),
+               'ar_booking'=> $noticeHtml,
+               'passangers'=> $passangersHtml ));
         }
 
         return $html;
@@ -121,10 +120,10 @@ class BookingsController
         $html = '';
 
         // If the form have been submitted :
-        if (isset($_POST['id'])) {
+        if (isset($_POST['id_booking'])) {
             // Delete the user :
             $usersService = new BookingsService();
-            $isOk = $usersService->deleteBooking($_POST['id']);
+            $isOk = $usersService->deleteBooking($_POST['id_booking']);
             if ($isOk) {
                 $html = 'Réservation supprimée avec succès.';
             } else {

@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php
 
 namespace App\Entities;
 
@@ -9,6 +9,7 @@ class Car
     private $model;
     private $color;
     private $nbrSlots;
+    private $id_uesr;
 
     public function getId(): string
     {
@@ -66,6 +67,25 @@ class Car
     public function setNbrSlots(int $nbrSlots): self
     {
         $this->nbrSlots = $nbrSlots;
+
+        return $this;
+    }
+    /**
+     * Get the value of id_uesr
+     */
+    public function getIdUesr()
+    {
+        return $this->id_uesr;
+    }
+
+    /**
+     * Set the value of id_uesr
+     *
+     * @return  self
+     */
+    public function setIdUesr($id_uesr)
+    {
+        $this->id_uesr = $id_uesr;
 
         return $this;
     }

@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php
 
 namespace App\Services;
 
@@ -46,7 +46,7 @@ class UsersService
                 $user->setEmail($userDTO['email']);
                 $date = new DateTime($userDTO['birthday']);
                 if ($date !== false) {
-                    $user->setBirthday($date);
+                    $user->setbirthday($date);
                 }
 
                 // Get cars of this user :
@@ -56,7 +56,7 @@ class UsersService
                 $users[] = $user;
             }
         }
-
+        
         return $users;
     }
 
@@ -68,8 +68,9 @@ class UsersService
         $isOk = false;
 
         $dataBaseService = new DataBaseService();
+        $isOk = $dataBaseService->deleteUser($id);
 
-        return $dataBaseService->deleteUser($id);
+        return $isOk;
     }
 
     /**
@@ -80,8 +81,9 @@ class UsersService
         $isOk = false;
 
         $dataBaseService = new DataBaseService();
+        $isOk = $dataBaseService->setUserCar($userId, $carId);
 
-        return $dataBaseService->setUserCar($userId, $carId);
+        return $isOk;
     }
 
     /**
@@ -98,11 +100,11 @@ class UsersService
         if (!empty($usersCarsDTO)) {
             foreach ($usersCarsDTO as $userCarDTO) {
                 $car = new Car();
-                $car->setId($userCarDTO['id_car']);
+                $car->setId($userCarDTO['id']);
                 $car->setBrand($userCarDTO['brand']);
                 $car->setModel($userCarDTO['model']);
                 $car->setColor($userCarDTO['color']);
-                $car->setNbrSlots((int) $userCarDTO['nbrSlots']);
+                $car->setNbrSlots($userCarDTO['nbrSlots']);
                 $userCars[] = $car;
             }
         }

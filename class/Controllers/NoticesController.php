@@ -41,9 +41,9 @@ class NoticesController
     /**
      * Return the html for the read action.
      */
-    public function getNotices(): string
+    public function getNotices(): array
     {
-        $html = '';
+        $html = [];
 
         // Get all notices :
         $noticesService = new NoticesService();
@@ -56,13 +56,13 @@ class NoticesController
                 $user = $notice->getCreator();
                 $userHtml .= 'Créé par : ' . $user->getFirstname() . ' ' . $user->getLastname();
             }
-            $html .=
-                '#' . $notice->getId() . ' ' .
-                $notice->getStartCity() . ' ' .
-                $notice->getEndCity() . ' ' .
-                $notice->getUserCreator() . ' ' .
-                $userHtml .
-                '<br />';
+            
+                array_push($html , array(
+                    'StratCity' =>   $notice->getStartCity(),
+                    'EndCit' =>   $notice->getEndCity(),
+                    'UserCreator' =>   $notice->getUserCreator(),
+                    'uesrIfo'=> $userHtml,
+                    'text'=> $notice->getText() ));
         }
 
         return $html;

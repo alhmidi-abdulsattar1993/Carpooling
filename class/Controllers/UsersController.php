@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php
 
 namespace App\Controllers;
 
@@ -6,6 +6,7 @@ use App\Services\UsersService;
 
 class UsersController
 {
+    
     /**
      * Return the html for the create action.
      */
@@ -14,11 +15,11 @@ class UsersController
         $html = '';
 
         // If the form have been submitted :
-        if (isset($_POST['firstname'])
-            && isset($_POST['lastname'])
-            && isset($_POST['email'])
-            && isset($_POST['birthday'])
-            && isset($_POST['cars'])) {
+        if (isset($_POST['firstname']) &&
+            isset($_POST['lastname']) &&
+            isset($_POST['email']) &&
+            isset($_POST['birthday']) &&
+            isset($_POST['cars'])) {
             // Create the user :
             $usersService = new UsersService();
             $userId = $usersService->setUser(
@@ -49,9 +50,9 @@ class UsersController
     /**
      * Return the html for the read action.
      */
-    public function getUsers(): string
+    public function getUsers(): array
     {
-        $html = '';
+        $html = [];
 
         // Get all users :
         $usersService = new UsersService();
@@ -65,16 +66,19 @@ class UsersController
                     $carsHtml .= $car->getBrand() . ' ' . $car->getModel() . ' ' . $car->getColor() . ' ';
                 }
             }
-            $html .=
-                '#' . $user->getId() . ' ' .
-                $user->getFirstname() . ' ' .
-                $user->getLastname() . ' ' .
-                $user->getEmail() . ' ' .
-                $user->getBirthday()->format('d-m-Y') . ' ' .
-                $carsHtml . '<br />';
+
+            
+
+            array_push($html , array(
+              'id' =>   $user->getId(),
+              'name' =>   $user->getFirstname(),
+              'lastname' =>   $user->getLastname(),
+              'mail' =>   $user->getEmail(),
+              'birth' =>  $user->getBirthday()->format('d-m-Y'),
+              'cars' =>   $carsHtml));
         }
 
-        return $html;
+        return $html ;
     }
 
     /**
@@ -85,11 +89,11 @@ class UsersController
         $html = '';
 
         // If the form have been submitted :
-        if (isset($_POST['id'])
-            && isset($_POST['firstname'])
-            && isset($_POST['lastname'])
-            && isset($_POST['email'])
-            && isset($_POST['birthday'])) {
+        if (isset($_POST['id']) &&
+            isset($_POST['firstname']) &&
+            isset($_POST['lastname']) &&
+            isset($_POST['email']) &&
+            isset($_POST['birthday'])) {
             // Update the user :
             $usersService = new UsersService();
             $isOk = $usersService->setUser(
